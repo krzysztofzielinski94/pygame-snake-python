@@ -23,6 +23,10 @@ pygame.init()
 SCREEN_WIDTH = 384
 SCREEN_HEIGHT = 384 
 
+pygame.display.set_caption('Snake')
+icon = pygame.image.load('./assets/icon.png')
+pygame.display.set_icon(icon)
+
 # colors
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
