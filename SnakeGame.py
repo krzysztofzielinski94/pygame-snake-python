@@ -27,6 +27,33 @@ pygame.display.set_caption('Snake')
 icon = pygame.image.load('./assets/icon.png')
 pygame.display.set_icon(icon)
 
+# assets 
+snake_assets = pygame.image.load('./assets/SnakeAssets.png')
+asset_rect = snake_assets.get_rect()
+
+def draw_snake(name, direction, x, y):
+    if name == 'HEAD' and direction == 'RIGHT':
+        screen.blit(snake_assets, (x, y), (0, 32, 32, 32))
+    elif name == 'BODY' and direction == 'RIGHT':
+        screen.blit(snake_assets, (x, y), (128, 0, 32, 32))
+    elif name == 'HEAD' and direction == 'LEFT':
+        screen.blit(snake_assets, (x, y), (96, 64, 32, 32))
+    elif name == 'BODY' and direction == 'LEFT':
+        screen.blit(snake_assets, (x, y), (64, 64, 32, 32))
+    elif name == 'HEAD' and direction == 'UP':
+        screen.blit(snake_assets, (x, y), (0, 64, 32, 32))
+    elif name == 'BODY' and direction == 'UP':
+        screen.blit(snake_assets, (x, y), (96, 32, 32, 32))
+    elif name == 'HEAD' and direction == 'DOWN':
+        screen.blit(snake_assets, (x, y), (32, 0, 32, 32))
+    elif name == 'BODY' and direction == 'DOWN':
+        screen.blit(snake_assets, (x, y), (0, 0, 32, 32))
+
+
+def draw_food(name, x, y):
+    if name == 'food':
+        screen.blit(snake_assets, (x, y), (32, 128, 32, 32))
+
 # colors
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
@@ -40,17 +67,20 @@ game = SnakeGame()
 game.start_game()
 board_size = game.get_board().get_board_size()
 
-def draw_board():
+
+def draw_board(snake_direction):
     for c in range(board_size):
         for r in range(board_size):
             cell_value = game.get_board().get_board_cell(c, r)
-            if cell_value == '#':
-                pygame.draw.rect(screen, DARK_GREEN, (r*SQUARE_SIZE, c*SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
-            elif cell_value == 'S':
-                pygame.draw.rect(screen, BLACK, (r*SQUARE_SIZE, c*SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+            pygame.draw.rect(screen, DARK_GREEN, (r*SQUARE_SIZE, c*SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+            if cell_value == 'S':
+                cell_type = game.get_board().snake.body_part(c, r)
+                draw_snake(cell_type, snake_direction, r*SQUARE_SIZE, c*SQUARE_SIZE)
             elif cell_value == 'F':
-                pygame.draw.rect(screen, RED, (r*SQUARE_SIZE, c*SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+                draw_food('food', r*SQUARE_SIZE, c*SQUARE_SIZE)
+                
 
+    
     pygame.display.update()
 
 running = True
@@ -65,8 +95,8 @@ while running:
     while delta > 1/max_tps:
         delta -= 1/max_tps
         game.update_game(snake_direction)
-        print (snake_direction)
-        draw_board()
+        print (' ')
+        draw_board(snake_direction)
     
     
     for event in pygame.event.get():

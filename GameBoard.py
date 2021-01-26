@@ -31,11 +31,11 @@ class GameBoard:
             print ('')
 
     def update_game_board(self, direction):
-        self.snake.update_position(direction)
+        self.snake.update_position(direction, self.size)
         if self.food.x == self.snake.x and self.food.y == self.snake.y:
             self.snake.update_length()
             # create new food 
-            self.food = Food(6, 6)
+            self.food = Food(randint(0, self.size), randint(0, self.size))
         
         self.show_game_board()
 

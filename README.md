@@ -9,8 +9,9 @@ In this repository you can find the example solution for Snake game in Python.
 | :---: | :---: |
 | Snake Engine | ✔️ |
 | Add boxes | ✔️ |
-| Add graphics | ❌ |
+| Add graphics | ✔️ |
 | Add menu | ❌ |
+| Bug Fixing | ❌ |
 | Have fun! | ❌ |
 
 ## Installing 

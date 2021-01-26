@@ -1,6 +1,5 @@
 from GameObject import GameObject
 
-
 class Snake(GameObject):
     def __init__(self, x, y):
         super().__init__(x, y)
@@ -11,18 +10,24 @@ class Snake(GameObject):
             'LEFT'  : [0, -1]
         }
 
-        self.lenght = 1
+        self.lenght = 2
         self.body = [[self.x, self.y], [self.x, self.y]]
         
-    def update_position(self, direction):
+    def update_position(self, direction, size):
         del self.body[0]
-        self.x = (self.directions[direction][0] + self.x) % 12
-        self.y = (self.directions[direction][1] + self.y) % 12
+        self.x = (self.directions[direction][0] + self.x) % size
+        self.y = (self.directions[direction][1] + self.y) % size
         self.body.append([self.x, self.y])
 
     def update_length(self):
-        self.lenght +=1
+        self.lenght += 1
         self.body.append([self.x, self.y])
 
     def __str__(self):
         return 'S'
+
+    def body_part(self, x, y):
+        if [x, y] == self.body[self.lenght-1]:
+            return 'HEAD'
+        else:
+            return 'BODY'
