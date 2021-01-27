@@ -17,7 +17,11 @@ class Snake(GameObject):
         del self.body[0]
         self.x = (self.directions[direction][0] + self.x) % size
         self.y = (self.directions[direction][1] + self.y) % size
+        if [self.x, self.y] in self.body:
+            self.body.append([self.x, self.y])
+            return True
         self.body.append([self.x, self.y])
+        return False
 
     def update_length(self):
         self.lenght += 1

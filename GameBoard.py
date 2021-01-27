@@ -11,6 +11,7 @@ class GameBoard:
         self.snake = Snake(5,5)
         self.food = Food(2, 2)
         self.show_game_board()
+        self.game_over = False
 
     def create_game_board(self):
         for _ in range(self.size):
@@ -31,13 +32,19 @@ class GameBoard:
             print ('')
 
     def update_game_board(self, direction):
-        self.snake.update_position(direction, self.size)
+        #print (self.game_over)
+        self.game_over = self.snake.update_position(direction, self.size)
+        
         if self.food.x == self.snake.x and self.food.y == self.snake.y:
             self.snake.update_length()
-            # create new food 
-            self.food = Food(randint(0, self.size), randint(0, self.size))
-        
-        self.show_game_board()
+            f_x = randint(0, self.size)
+            f_y = randint(0, self.size)
+            while [f_x, f_y] in self.snake.body:
+                f_x = randint(0, self.size-2)
+                f_y = randint(0, self.size-2)
+                print (f_x, f_y)
+            print (f_x, f_y)
+            self.food = Food(f_x, f_y)
 
     def get_board_cell(self, i, j):
         if [i, j] in self.snake.body:

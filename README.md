@@ -10,9 +10,11 @@ In this repository you can find the example solution for Snake game in Python.
 | Snake Engine | ✔️ |
 | Add boxes | ✔️ |
 | Add graphics | ✔️ |
-| Add menu | ❌ |
-| Bug Fixing | ❌ |
+| Add Score | ✔️ |
+| Game over | ✔️ |
+| Bug fix | ✔️ |
 | Have fun! | ❌ |
+
 
 ## Installing 
 * Download the project

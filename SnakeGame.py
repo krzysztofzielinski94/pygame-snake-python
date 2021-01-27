@@ -4,8 +4,7 @@ from GameBoard import GameBoard
 class SnakeGame:
     def __init__(self):
         self.board = GameBoard()
-
-
+        
     def start_game(self):
         pass
 
@@ -56,9 +55,11 @@ def draw_food(name, x, y):
 
 # colors
 BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 DARK_GREEN = (93, 206, 157)
 
+font = pygame.font.SysFont("monospace", 40)
 SCREEN_SIZE = (SCREEN_WIDTH, SCREEN_HEIGHT)
 SQUARE_SIZE = 32
 screen = pygame.display.set_mode(SCREEN_SIZE)
@@ -78,9 +79,18 @@ def draw_board(snake_direction):
                 draw_snake(cell_type, snake_direction, r*SQUARE_SIZE, c*SQUARE_SIZE)
             elif cell_value == 'F':
                 draw_food('food', r*SQUARE_SIZE, c*SQUARE_SIZE)
-                
 
-    
+    label = font.render(str(game.get_board().snake.lenght-2), 1, BLACK)
+    screen.blit(label, (0, 0))    
+    pygame.display.update()
+
+def draw_game_over():
+    end_game_text = 'GAME OVER'
+    label = font.render(end_game_text, 1, WHITE)
+    screen.blit(label, (0, 0))
+    end_game_text = 'POINTS: ' + str(game.get_board().snake.lenght-2)
+    label = font.render(end_game_text, 1, WHITE)
+    screen.blit(label, (0, 50))
     pygame.display.update()
 
 running = True
@@ -94,11 +104,12 @@ while running:
     delta += clock.tick()/1000.0
     while delta > 1/max_tps:
         delta -= 1/max_tps
-        game.update_game(snake_direction)
-        print (' ')
-        draw_board(snake_direction)
-    
-    
+        if game.get_board().game_over == True:
+            draw_game_over()
+        else:
+            game.update_game(snake_direction)
+            draw_board(snake_direction)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False    
